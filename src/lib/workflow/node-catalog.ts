@@ -109,4 +109,6 @@ export function getNodeDefinition<K extends NodeKind>(
   return NODE_CATALOG[kind];
 }
 
-// we will continue next lesson
+export function isNodeKind(value: unknown): value is NodeKind {
+  return typeof value === "string" && value in NODE_CATALOG;
+}
