@@ -5,6 +5,7 @@ import { useState } from "react";
 import { cn } from "../../lib/utils";
 import { EditorProvider, useEditor } from "./editor-context";
 import { Topbar } from "./top-bar";
+import { NodePalette } from "./node-palette";
 
 export default function Editor() {
   return (
@@ -38,6 +39,15 @@ function EditorLayout() {
         onToggleConfig={toggleConfig}
         onTogglePalette={() => setPaletteOpen((open) => !open)}
       />
+
+      <div
+        className={cn(
+          "absolute inset-y-0 left-0 z-20 shadow-2xl transition-transform lg:static lg:z-auto lg:translate-x-0 lg:shadow-none",
+          paletteOpen ? "translate-x-0" : "-translate-x-full",
+        )}
+      >
+        <NodePalette />
+      </div>
     </div>
   );
 }
