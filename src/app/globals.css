@@ -84,37 +84,44 @@
 }
 
 .dark {
-  --background: oklch(0.145 0 0);
-  --foreground: oklch(0.985 0 0);
-  --card: oklch(0.205 0 0);
-  --card-foreground: oklch(0.985 0 0);
-  --popover: oklch(0.205 0 0);
-  --popover-foreground: oklch(0.985 0 0);
-  --primary: oklch(0.922 0 0);
-  --primary-foreground: oklch(0.205 0 0);
-  --secondary: oklch(0.269 0 0);
-  --secondary-foreground: oklch(0.985 0 0);
-  --muted: oklch(0.269 0 0);
-  --muted-foreground: oklch(0.708 0 0);
-  --accent: oklch(0.269 0 0);
-  --accent-foreground: oklch(0.985 0 0);
-  --destructive: oklch(0.704 0.191 22.216);
-  --border: oklch(1 0 0 / 10%);
-  --input: oklch(1 0 0 / 15%);
-  --ring: oklch(0.556 0 0);
+  /* MCP Flow is dark-first: a cool, low-contrast neutral palette. */
+  --background: oklch(0.155 0.006 265);
+  --foreground: oklch(0.94 0.004 265);
+  --card: oklch(0.195 0.007 265);
+  --card-foreground: oklch(0.94 0.004 265);
+  --popover: oklch(0.205 0.008 265);
+  --popover-foreground: oklch(0.94 0.004 265);
+  --primary: oklch(0.72 0.14 250);
+  --primary-foreground: oklch(0.16 0.02 265);
+  --secondary: oklch(0.25 0.008 265);
+  --secondary-foreground: oklch(0.94 0.004 265);
+  --muted: oklch(0.24 0.007 265);
+  --muted-foreground: oklch(0.66 0.012 265);
+  --accent: oklch(0.26 0.009 265);
+  --accent-foreground: oklch(0.96 0.004 265);
+  --destructive: oklch(0.66 0.19 22);
+  --border: oklch(1 0 0 / 8%);
+  --input: oklch(1 0 0 / 12%);
+  --ring: oklch(0.72 0.14 250 / 60%);
   --chart-1: oklch(0.87 0 0);
   --chart-2: oklch(0.556 0 0);
   --chart-3: oklch(0.439 0 0);
   --chart-4: oklch(0.371 0 0);
   --chart-5: oklch(0.269 0 0);
-  --sidebar: oklch(0.205 0 0);
-  --sidebar-foreground: oklch(0.985 0 0);
-  --sidebar-primary: oklch(0.488 0.243 264.376);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.269 0 0);
-  --sidebar-accent-foreground: oklch(0.985 0 0);
-  --sidebar-border: oklch(1 0 0 / 10%);
-  --sidebar-ring: oklch(0.556 0 0);
+  --sidebar: oklch(0.175 0.006 265);
+  --sidebar-foreground: oklch(0.94 0.004 265);
+  --sidebar-primary: oklch(0.72 0.14 250);
+  --sidebar-primary-foreground: oklch(0.16 0.02 265);
+  --sidebar-accent: oklch(0.24 0.008 265);
+  --sidebar-accent-foreground: oklch(0.96 0.004 265);
+  --sidebar-border: oklch(1 0 0 / 7%);
+  --sidebar-ring: oklch(0.72 0.14 250 / 60%);
+
+  /* Canvas */
+  --canvas: oklch(0.135 0.005 265);
+  --canvas-dot: oklch(1 0 0 / 9%);
+  --edge-data: oklch(0.6 0.012 265);
+  --edge-mcp: oklch(0.72 0.12 230);
 }
 
 @layer base {
@@ -126,5 +133,115 @@
   }
   html {
     @apply font-sans;
+  }
+}
+
+/* ------------------------------------------------------------------------ */
+/* React Flow overrides                                                      */
+/* ------------------------------------------------------------------------ */
+
+.react-flow {
+  --xy-background-color: var(--canvas);
+  --xy-edge-stroke: var(--edge-data);
+  --xy-edge-stroke-selected: var(--primary);
+  --xy-connectionline-stroke: var(--primary);
+  --xy-controls-button-background-color: var(--card);
+  --xy-controls-button-background-color-hover: var(--accent);
+  --xy-controls-button-color: var(--muted-foreground);
+  --xy-controls-button-color-hover: var(--foreground);
+  --xy-controls-button-border-color: var(--border);
+  --xy-minimap-background-color: var(--card);
+  --xy-minimap-mask-background-color: oklch(0.1 0.005 265 / 70%);
+  --xy-minimap-node-background-color: oklch(0.35 0.01 265);
+  --xy-attribution-background-color: transparent;
+}
+
+.react-flow__controls {
+  border: 1px solid var(--border);
+  border-radius: 0.5rem;
+  overflow: hidden;
+  box-shadow: none;
+}
+
+.react-flow__minimap {
+  border: 1px solid var(--border);
+  border-radius: 0.5rem;
+  overflow: hidden;
+}
+
+/* Our nodes draw their own card; remove the default wrapper chrome. */
+.react-flow__node {
+  border-radius: 0.75rem;
+}
+
+/*
+ * React Flow ships default styles for its built-in "output" node type. Our
+ * Output node shares that name, so undo them.
+ */
+.react-flow .react-flow__node-output {
+  padding: 0;
+  width: auto;
+  border: none;
+  background: none;
+  color: inherit;
+  font-size: inherit;
+  text-align: left;
+}
+
+.react-flow .react-flow__node-output.selectable:hover,
+.react-flow .react-flow__node-output.selectable.selected,
+.react-flow .react-flow__node-output.selectable:focus,
+.react-flow .react-flow__node-output.selectable:focus-visible {
+  box-shadow: none;
+}
+
+.react-flow__handle {
+  transition:
+    transform 120ms ease,
+    box-shadow 120ms ease;
+}
+
+.react-flow__handle.connectingto,
+.react-flow__handle:hover {
+  transform: scale(1.35);
+}
+
+.react-flow__handle.connectingto.valid {
+  box-shadow: 0 0 0 3px oklch(0.72 0.14 160 / 45%);
+}
+
+@keyframes mcp-flow-dash {
+  to {
+    stroke-dashoffset: -20;
+  }
+}
+
+.edge-flowing {
+  stroke-dasharray: 6 4;
+  animation: mcp-flow-dash 0.6s linear infinite;
+}
+
+@keyframes node-running {
+  0%,
+  100% {
+    box-shadow:
+      0 0 0 1px oklch(0.72 0.14 250 / 70%),
+      0 0 0 4px oklch(0.72 0.14 250 / 12%);
+  }
+  50% {
+    box-shadow:
+      0 0 0 1px oklch(0.72 0.14 250 / 90%),
+      0 0 0 7px oklch(0.72 0.14 250 / 22%);
+  }
+}
+
+.node-running {
+  animation: node-running 1.2s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .edge-flowing,
+  .node-running {
+    animation: none;
   }
 }

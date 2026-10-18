@@ -1,6 +1,6 @@
-export default function Home() {
+import Editor from "@/components/editor/editor";
 
-  return (
-   <h1>Hello World</h1>
-  );
+export default function Home() {
+  
+  return <Editor />;
 }

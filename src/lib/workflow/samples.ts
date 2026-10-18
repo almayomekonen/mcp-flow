@@ -268,7 +268,7 @@ export const SAMPLE_WORKFLOWS: WorkflowDefinition[] = [
   PROJECT_HEALTH_CHECK,
 ];
 
-export function creareEmptyWorkflow(): WorkflowDefinition {
+export function createEmptyWorkflow(): WorkflowDefinition {
   return {
     version: 1,
     id: `workflow-${Date.now().toString(36)}`,
